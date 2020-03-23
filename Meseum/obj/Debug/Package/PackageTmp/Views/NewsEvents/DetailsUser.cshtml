@@ -1,0 +1,82 @@
+﻿@model Meseum.ViewModel.NewsDetails
+    @{
+        Layout = "~/Views/shared/_layoutArt.cshtml";
+
+    }
+    <section class="banner-area relative" id="home">
+        <div class="overlay overlay-bg"></div>
+        <div class="container">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="about-content col-lg-12">
+                    <h1 class="text-white">
+                       News and Notice
+                    </h1>
+                    <p class="text-white link-nav"><a href="@Url.Action("Index","Home")">Home </a>  <span class="lnr lnr-arrow-right"></span>  <a href="@Url.Action("DetailsUser","NewsEvents")"> News</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="blog-posts-area section-gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 post-list blog-post-list">
+                    <div class="single-post">
+                        @if (Model.News.Files.ToList().Count()>0)
+                        {
+
+                            foreach (var item in Model.News.Files)
+                            {
+                                <img class="img-fluid" src="@Url.Content(item.path)" alt="">
+                            }
+                        }
+                        <ul class="tags">
+                            <li>@Model.News.UploadDate.ToString("dd MMM yyyy"),</li>
+                            <li>@Model.News.UpdatedBy</li>
+                        </ul>
+                        <a href="#">
+                            <h1>
+                                @Model.News.Title
+                            </h1>
+                        </a>
+                        <div class="content-wrap">
+
+                            @Html.Raw(Model.News.Description)
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-4 sidebar">
+
+                    <div class="single-widget recent-posts-widget">
+                        <h4 class="title">Recent Posts</h4>
+                        <div class="blog-list"  style="height:300px;overflow-y:scroll;">
+                            @foreach (var item in Model.RecentNews.ToList())
+                            {
+                                <div class="single-recent-post d-flex flex-row">
+                                    <div class="recent-thumb">
+                                        @if (item.Files.ToList().Count()>0)
+                                        {
+                                        <img style="height:77px;width:77px;" class="img-fluid" src="@Url.Content(item.Files.FirstOrDefault().path)" alt="">
+                                        }
+                                    </div>
+                                    <div class="recent-details">
+                                        <a href="@Url.Action("DetailsUser","NewsEvents")?id=@item.Id">
+                                            <h4>
+                                                @item.Title
+                                            </h4>
+                                        </a>
+                                        <p>
+                                            @item.UploadDate.ToString("dd MMM yyyy")
+                                        </p>
+                                    </div>
+                                </div>
+                                <br />
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </section>
