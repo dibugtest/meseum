@@ -128,6 +128,7 @@ namespace Meseum.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Edit(AboutUs aboutUs,HttpPostedFileBase Image)
         {
             if (ModelState.IsValid)

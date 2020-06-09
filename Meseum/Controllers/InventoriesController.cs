@@ -268,6 +268,7 @@ namespace Meseum.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Create(InventoryVM inventoryVM)
         {
             if (ModelState.IsValid)
@@ -345,6 +346,7 @@ namespace Meseum.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Edit(int? id, InventoryVM inventoryVM)
         {
             if (ModelState.IsValid)
@@ -421,7 +423,7 @@ namespace Meseum.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             IEnumerable<Files> files = db.Inventories.Include(mbox => mbox.Files).FirstOrDefault(m => m.Id == id).Files;
-            foreach (var item in files)
+            foreach (var item in files.ToList())
             {
                 if (System.IO.File.Exists(Server.MapPath(item.path)))
                 {

@@ -250,8 +250,10 @@ namespace Meseum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+           // Gallery gal = db.Gallery.Include(m=>m.Files).FirstOrDefault(m=>m.Id==id);
+
             IEnumerable<ImageFile> files = db.Gallery.Include(mbox => mbox.Files).FirstOrDefault(m => m.Id == id).Files;
-            foreach (var item in files)
+            foreach (var item in files.ToList())
             {
                 if (System.IO.File.Exists(Server.MapPath(item.path)))
                 {

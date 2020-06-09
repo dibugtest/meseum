@@ -226,7 +226,7 @@ namespace Meseum.Controllers
                 Inv.Latit = longi.Latit;
                 Inv.Altitude = longi.Altitude;
                 db.SaveChanges();
-                return Ok("Latitude, longitude and altitude updated successfully.");
+                return Ok("Latitude, longitude and altitude updated  successfully.");
             }
             else
             {

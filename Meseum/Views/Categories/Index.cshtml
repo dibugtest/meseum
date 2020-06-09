@@ -10,7 +10,8 @@
 <h2>Category</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+
 </p>
 <table class="table table-bordered tblData">
     <thead>
@@ -41,7 +42,8 @@
                 </td>
                 <td>@item.Location.Name</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ShortDetail)
+                    @(item.ShortDetail.Length>50?item.ShortDetail.Substring(0,50)+"....":item.ShortDetail)
+
                 </td>
                
                 <td>

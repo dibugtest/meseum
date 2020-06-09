@@ -7,7 +7,8 @@
 <h2>Locations</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+
 </p>
 <table class="table table-bordered">
     <thead>
@@ -35,7 +36,7 @@
                     @Html.DisplayFor(modelItem => item.ShortDetail)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LongDetail)
+                  @(item.LongDetail.Length>50?item.LongDetail.Substring(0,50)+"....":item.LongDetail)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

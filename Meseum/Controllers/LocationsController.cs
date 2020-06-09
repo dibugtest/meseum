@@ -63,8 +63,10 @@ namespace Meseum.Controllers
                 {
                     Directory.CreateDirectory(Server.MapPath("~/Admin/Images/Location/"));
                 }
-                file.SaveAs(Server.MapPath("~/Admin/Images/Location/" + loc.Id.ToString() + ".jpg"));
-
+                if (file != null)
+                {
+                    file.SaveAs(Server.MapPath("~/Admin/Images/Location/" + loc.Id.ToString() + ".jpg"));
+                }
                 return RedirectToAction("Index");
             }
 
@@ -132,10 +134,26 @@ namespace Meseum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Location location = db.Locations.Find(id);
-            db.Locations.Remove(location);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var categories = db.Categories.Where(m => m.LocationId == id);
+            var inventories = db.Inventories.Where(m => m.LocationId == id);
+            if (categories.ToList().Count > 0 || inventories.ToList().Count > 0)
+            {
+                TempData["ErrorMessage"] = "Can't delete Record. Record linked to another table.";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                if (System.IO.File.Exists(Server.MapPath("~/Admin/Images/Location/" + id + ".jpg")))
+                {
+                    System.IO.File.Delete(Server.MapPath("~/Admin/Images/location/" + id + ".jpg"));
+                }
+                Location location = db.Locations.Find(id);
+                db.Locations.Remove(location);
+                db.SaveChanges();
+                TempData["Message"] = "Record Deleted Successfully.";
+                return RedirectToAction("Index");
+
+            }
         }
 
         protected override void Dispose(bool disposing)

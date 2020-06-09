@@ -162,7 +162,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.LongDetail)
 
-                    @Html.EditorFor(model => model.LongDetail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextAreaFor(model => model.LongDetail, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.LongDetail, "", new { @class = "text-danger" })
                 </div>
             </div>

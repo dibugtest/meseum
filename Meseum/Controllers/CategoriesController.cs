@@ -120,10 +120,18 @@ namespace Meseum.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (!db.Inventories.Any(m => m.CategoryId == id))
+            {
+                Category category = db.Categories.Find(id);
+                db.Categories.Remove(category);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Can't Delete the Record. Record connected to another table record";
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

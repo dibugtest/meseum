@@ -249,7 +249,7 @@ namespace Meseum.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             IEnumerable<ImageFile> files = db.Events.Include(mbox => mbox.Files).FirstOrDefault(m => m.Id == id).Files;
-            foreach (var item in files)
+            foreach (var item in files.ToList())
             {
                 if (System.IO.File.Exists(Server.MapPath(item.path)))
                 {
